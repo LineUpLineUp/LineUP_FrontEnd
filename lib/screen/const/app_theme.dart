@@ -11,4 +11,7 @@ final ThemeData appTheme = ThemeData(
       // 여기에 다른 스타일 속성 추가
     ),
   ),
+  splashFactory: NoSplash.splashFactory, // 눌렀을 때의 물방울 효과 제거
+  highlightColor: Colors.transparent, // 눌렀을 때의 하이라이트 효과 제거,
+
 );
