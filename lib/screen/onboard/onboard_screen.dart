@@ -30,7 +30,7 @@ class OnboardingScreen extends StatelessWidget {
               ),
               const Spacer(),
               Padding(
-                padding: const EdgeInsets.only(top: 11, right: 25),
+                padding: const EdgeInsets.only(top: 11, right: 40),
                 child: SmoothPageIndicator(
                   controller: controller,
                   count: 3,
@@ -130,7 +130,6 @@ class OnBoardingPageFirst extends OnboardingPage {
   Widget background() {
     throw UnimplementedError();
   }
-
 }
 
 class OnBoardingPageSecond extends OnboardingPage {
@@ -160,7 +159,18 @@ class OnBoardingPageSecond extends OnboardingPage {
         const Padding(
           padding: EdgeInsets.only(top: 52),
           child: Text(
-            '신뢰감 있는 PASS\n검증절차',
+            '신뢰감 있는 PASS',
+            style: TextStyle(
+              fontSize: 36,
+              fontWeight: FontWeight.w900,
+              color: Colors.white,
+            ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 0),
+          child: Text(
+            '검증절차',
             style: TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.w900,
@@ -169,7 +179,7 @@ class OnBoardingPageSecond extends OnboardingPage {
           ),
         ),
         const Padding(
-          padding: EdgeInsets.only(top: 10, left: 40),
+          padding: EdgeInsets.only(top: 10),
           child: Text(
             '라인업은 pass를 인증한 성인분들만 이용할 수 있어요.',
             style: TextStyle(
@@ -210,7 +220,6 @@ class OnBoardingPageSecond extends OnboardingPage {
 }
 
 class LoginPage extends OnboardingPage {
-
   @override
   Widget content(BuildContext context) {
     return Column(
@@ -218,7 +227,7 @@ class LoginPage extends OnboardingPage {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 52),
+          padding: const EdgeInsets.only(top: 52,right: 40),
           child: Align(
             alignment: Alignment.centerRight,
             child: Column(
@@ -248,41 +257,41 @@ class LoginPage extends OnboardingPage {
                   ),
                 ),
                 Align(
-                    alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 357),
-                          child: Column(
-                            children: [
-                              const Text(
-                                '계속하려면 로그인 하세요',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 357),
+                        child: Column(
+                          children: [
+                            const Text(
+                              '계속하려면 로그인 하세요',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
                               ),
-                              const SizedBox(
-                                height: 16,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            snsLogin(context),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            const Text(
+                              '로그인 시 이용 약관 및 개인정보 보호정책에 동의합니다.',
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
                               ),
-                              snsLogin(context),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              const Text(
-                                '로그인 시 이용 약관 및 개인정보 보호정책에 동의합니다.',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -302,34 +311,34 @@ class LoginPage extends OnboardingPage {
             height: 54,
           ),
           onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
         ),
         const SizedBox(
           width: 16,
         ),
         GestureDetector(
-          child:SvgPicture.asset(
+          child: SvgPicture.asset(
             'assets/icons/sns/naver.svg',
             height: 54,
           ),
           onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
         ),
         const SizedBox(
           width: 16,
         ),
         GestureDetector(
-          child:SvgPicture.asset(
+          child: SvgPicture.asset(
             'assets/icons/sns/apple.svg',
             height: 54,
           ),
           onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
         ),
         const SizedBox(
@@ -341,8 +350,8 @@ class LoginPage extends OnboardingPage {
             height: 54,
           ),
           onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const HomeScreen()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const HomeScreen()));
           },
         ),
       ],
