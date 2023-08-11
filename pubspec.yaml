@@ -36,6 +36,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  smooth_page_indicator: ^1.1.0
+  flutter_native_splash: ^2.2.0+1
 
 dev_dependencies:
   flutter_test:
@@ -60,8 +62,11 @@ flutter:
   uses-material-design: true
   assets:
     - assets/icons/
+    - assets/icons/sns/
     - assets/images/
+    - assets/images/mascot/
     - assets/fonts/
+    - assets/images/onboard/
     - assets/images/carousel/
 
 
