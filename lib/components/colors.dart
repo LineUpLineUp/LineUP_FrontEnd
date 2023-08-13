@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
+  AppColors._(); // 이 클래스는 인스턴스화되지 않도록 합니다.
   static const primaryColor = Colors.blue;
   static const accentColor = Color(0xFF2CE3A7);
   static const primaryButtonColor = Color(0xFFAFAFAF);
