@@ -110,6 +110,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0+1"
+  flutter_sfsymbols:
+    dependency: "direct main"
+    description:
+      name: flutter_sfsymbols
+      sha256: e72565d9ed3e55fa4fb32920882a485245ba7791e49477b03c0597b2e41e7064
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   flutter_svg:
     dependency: "direct main"
     description:
