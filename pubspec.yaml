@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   smooth_page_indicator: ^1.1.0
   flutter_native_splash: ^2.2.0+1
+  flutter_sfsymbols: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -90,6 +91,12 @@ flutter:
     - family: AppleSDGothicNeo
       fonts:
         - asset: assets/fonts/AppleSDGothicNeo.ttc
+
+
+
+    - family: sficonsets
+      fonts:
+        - asset: packages/flutter_sfsymbols/fonts/sficonsets.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
