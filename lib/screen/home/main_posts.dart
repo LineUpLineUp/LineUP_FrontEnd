@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../components/colors.dart';
-import '../components/gradient_text.dart';
-import '../models/post1.dart';
+import '../../components/colors.dart';
+import '../../models/post.dart';
 
 class MainPosts extends StatelessWidget {
   final posts = [
     Post(
-      title: '대잠동 백화점 줄서기',
-      body: '포스트 내용',
-      cost: '200,000',
-      date: DateTime.now(),
-    ),
+        title: '대잠동 백화점 줄서기',
+        body: '포스트 내용',
+        cost: '200,000',
+        startDate: DateTime.now(),
+        endDate: DateTime.now()),
     Post(
-      title: '대잠동 백화점 줄서기',
-      body: '포스트 내용',
-      cost: '200,000',
-      date: DateTime.now(),
-    ),
+        title: '대잠동 백화점 줄서기',
+        body: '포스트 내용',
+        cost: '200,000',
+        startDate: DateTime.now(),
+        endDate: DateTime.now()),
     Post(
-      title: '대잠동 백화점 줄서기',
-      body: '포스트 내용',
-      cost: '200,000',
-      date: DateTime.now(),
-    ),
+        title: '대잠동 백화점 줄서기',
+        body: '포스트 내용',
+        cost: '200,000',
+        startDate: DateTime.now(),
+        endDate: DateTime.now()),
   ];
 
   @override
@@ -34,7 +33,6 @@ class MainPosts extends StatelessWidget {
         Column(
           children: <Widget>[
             for (var post in posts) ...[
-
               Container(
                 width: 338,
                 height: 92,
@@ -66,7 +64,7 @@ class MainPosts extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            post.date.toString(),
+                            post.startDate.toString(),
                             style: TextStyle(
                               fontSize: 12,
                               color: AppColors.primaryTextColor,
@@ -83,12 +81,12 @@ class MainPosts extends StatelessWidget {
                     ),
                     const SizedBox(width: 6),
                     Container(
-                        width: 92,
-                        height: 92,
-                        decoration: BoxDecoration(
-                          color: AppColors.secondaryBackgroundColor,
-                          // borderRadius: BorderRadius.circular(4),
-                        ))
+                      width: 92,
+                      height: 92,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondaryBackgroundColor,
+                      ),
+                    )
                   ],
                 ),
               ),

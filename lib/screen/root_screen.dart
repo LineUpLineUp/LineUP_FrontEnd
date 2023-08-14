@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../components/colors.dart';
 import '../components/icon_components.dart';
-import 'home_screen.dart';
+import 'home/home_screen.dart';
 
 class RootScreen extends StatefulWidget {
   const RootScreen({Key? key}) : super(key: key);
@@ -24,7 +24,6 @@ class _RootScreenState extends State<RootScreen> with
 
     controller = TabController(length: 3, vsync: this); // 컨트롤러 초기화하기
     controller?.index = 1;
-
     // 컨트롤러 속성이 변경될 때마다 실행할 함수 등록
     controller!.addListener(tabListener);
   }
@@ -48,7 +47,6 @@ class _RootScreenState extends State<RootScreen> with
         children: renderChildren(),
       ),
       bottomNavigationBar: renderBottomNavigation(),
-      // bottomNavigationBar: CustomBottomNavigationBar(scrollController: scrollController),
     );
   }
 
@@ -56,7 +54,7 @@ class _RootScreenState extends State<RootScreen> with
   List<Widget> renderChildren() {
     return [
       Container(
-        child: Center(
+        child: const Center(
           child: Text(
             'Tab 1',
             style: TextStyle(
@@ -66,18 +64,9 @@ class _RootScreenState extends State<RootScreen> with
         ),
       ),
       // Container(
-      HomeScreen(),
-      // child: Center(
-      //   child: Text(
-      //     'Tab 2',
-      //     style: TextStyle(
-      //       color: Colors.black,
-      //     ),
-      //   ),
-      // ),
-      // ),
+      const HomeScreen(),
       Container(
-        child: Center(
+        child: const Center(
           child: Text(
             'Tab 3',
             style: TextStyle(
@@ -89,7 +78,7 @@ class _RootScreenState extends State<RootScreen> with
     ];
   }
 
-  BottomNavigationBar renderBottomNavigation() {
+  Widget renderBottomNavigation() {
     return BottomNavigationBar(
         currentIndex: controller!.index,
         onTap: (int index) {

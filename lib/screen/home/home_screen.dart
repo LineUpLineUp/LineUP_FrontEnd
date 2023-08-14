@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/app_bar.dart';
 import 'package:line_up_front_end/components/colors.dart';
-import 'package:line_up_front_end/screen/main_posts.dart';
+import 'package:line_up_front_end/screen/home/main_posts.dart';
 import 'package:line_up_front_end/screen/post/posts_screen.dart';
 import 'package:line_up_front_end/screen/post_form.dart';
 
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     // TODO: Carousel 설정
-    Timer.periodic(Duration(seconds: 3), (timer) {
+    Timer.periodic(const Duration(seconds: 3), (timer) {
       // 현재 페이지 가져오기
       int? nextPage = pageController.page?.toInt();
 
@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
       pageController.animateToPage(
         nextPage,
-        duration: Duration(milliseconds: 500),
+        duration: const Duration(milliseconds: 500),
         curve: Curves.ease,
       );
     });
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       IconButtonWithText(
-                        iconPath: 'assets/icons/맞춤.png',
+                        iconPath: 'assets/icons/categories/customization.png',
                         text: '맞춤',
                         onPressed: () {
                           print('맞춤 버튼 클릭!');
@@ -98,19 +98,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       IconButtonWithText(
-                        iconPath: 'assets/icons/급줄.png',
+                        iconPath: 'assets/icons/categories/fast.png',
                         text: '급줄',
                         onPressed: () {
                           print('급줄 버튼 클릭!');
                           // TODO: 급줄 페이지로 이동
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PostsScreen()),
+                            MaterialPageRoute(builder: (context) => const PostsScreen()),
                           );
                         },
                       ),
                       IconButtonWithText(
-                        iconPath: 'assets/icons/백화점.png',
+                        iconPath: 'assets/icons/categories/department_store.png',
                         text: '백화점',
                         onPressed: () {
                           print('백화점 버튼 클릭!');
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       IconButtonWithText(
-                        iconPath: 'assets/icons/음식점.png',
+                        iconPath: 'assets/icons/categories/restaurant.png',
                         text: '음식점',
                         onPressed: () {
                           print('음식점 버튼 클릭!');
@@ -132,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       IconButtonWithText(
-                        iconPath: 'assets/icons/팝업스토어.png',
+                        iconPath: 'assets/icons/categories/pop_up_store.png',
                         text: '팝업스토어',
                         onPressed: () {
                           print('팝업스토어 버튼 클릭!');
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                       IconButtonWithText(
-                        iconPath: 'assets/icons/카페.png',
+                        iconPath: 'assets/icons/categories/cafe.png',
                         text: '카페',
                         onPressed: () {
                           print('카페 버튼 클릭!');
@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(width: 14),
                           Text(
                             '$selectedLocation',
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                             ),
@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 326,
                       height: 22,
                       child: IconButton(
-                        padding: EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(0),
                         onPressed: () {},
                         icon: SvgPicture.asset(
                           'assets/icons/main_announcement.svg',
@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(left: 26, right: 132),
+                  padding: const EdgeInsets.only(left: 26, right: 132),
                   child: Container(
                     width: 232,
                     height: 43,
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SizedBox(height: 24),
                 Padding(
-                  padding: EdgeInsets.only(left: 29, right: 129),
+                  padding: const EdgeInsets.only(left: 29, right: 129),
                   child: Container(
                     width: 232,
                     height: 62,
@@ -272,13 +272,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       // TODO: 모달 기능 추가 필요
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 27),
+        padding: const EdgeInsets.only(bottom: 27),
         // right: 29,
         // bottom: 109,
         child: FloatingActionButton(
           onPressed: () {
             _toggleItemList();
           },
+          backgroundColor: const Color(0x2CE3A7),
+          tooltip: 'Show/Hide Item List',
           child: _showItemList
               ? SvgPicture.asset(
             'assets/icons/floating_buttonX.svg',
@@ -290,8 +292,6 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 44,
             height: 44,
           ),
-          backgroundColor: Color(0x2CE3A7),
-          tooltip: 'Show/Hide Item List',
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -327,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => PostForm()),
+                        MaterialPageRoute(builder: (context) => const PostForm()),
                       ); // 다른 페이지의 위젯
                     },
                     child: Row(
@@ -337,14 +337,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 20,
                           color: AppColors.secondaryBackgroundColor,
                           child: Image.asset(
-                            'assets/icons/급줄.png',
+                            'assets/icons/categories/fast.png',
                           ),
                         ),
                         const SizedBox(width: 9),
-                        Text(
+                        const Text(
                           '급줄',
-                          style: const TextStyle(
-                            fontFamily: "AppleSDGothicNeoM00",
+                          style: TextStyle(
+
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: Colors.white,
@@ -369,7 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PostForm()),
+                            MaterialPageRoute(builder: (context) => const PostForm()),
                           ); // 다른 페이지의 위젯
                         },
                         child: Row(
@@ -379,14 +379,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20,
                               color: AppColors.secondaryBackgroundColor,
                               child: Image.asset(
-                                'assets/icons/백화점.png',
+                                'assets/icons/categories/department_store.png',
                               ),
                             ),
                             const SizedBox(width: 9),
-                            Text(
+                            const Text(
                               '백화점',
-                              style: const TextStyle(
-                                fontFamily: "AppleSDGothicNeoM00",
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
@@ -399,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PostForm()),
+                            MaterialPageRoute(builder: (context) => const PostForm()),
                           ); // 다른 페이지의 위젯
                         },
                         child: Row(
@@ -409,14 +408,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20,
                               color: AppColors.secondaryBackgroundColor,
                               child: Image.asset(
-                                'assets/icons/음식점.png',
+                                'assets/icons/categories/restaurant.png',
                               ),
                             ),
                             const SizedBox(width: 9),
-                            Text(
+                            const Text(
                               '음식점',
-                              style: const TextStyle(
-                                fontFamily: "AppleSDGothicNeoM00",
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
@@ -429,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PostForm()),
+                            MaterialPageRoute(builder: (context) => const PostForm()),
                           ); // 다른 페이지의 위젯
                         },
                         child: Row(
@@ -440,14 +438,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20,
                               color: AppColors.secondaryBackgroundColor,
                               child: Image.asset(
-                                'assets/icons/팝업스토어.png',
+                                'assets/icons/categories/pop_up_store.png',
                               ),
                             ),
                             const SizedBox(width: 9),
-                            Text(
+                            const Text(
                               '팝업스토어',
-                              style: const TextStyle(
-                                fontFamily: "AppleSDGothicNeoM00",
+                              style: TextStyle(
+
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
@@ -460,7 +458,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => PostForm()),
+                            MaterialPageRoute(builder: (context) => const PostForm()),
                           ); // 다른 페이지의 위젯
                         },
                         child: Row(
@@ -471,14 +469,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20,
                               color: AppColors.secondaryBackgroundColor,
                               child: Image.asset(
-                                'assets/icons/카페.png',
+                                'assets/icons/categories/cafe.png',
                               ),
                             ),
                             const SizedBox(width: 9),
-                            Text(
+                            const Text(
                               '카페',
-                              style: const TextStyle(
-                                fontFamily: "AppleSDGothicNeoM00",
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
@@ -522,10 +519,10 @@ class IconButtonWithText extends StatelessWidget {
           onPressed: onPressed,
           iconSize: 46,
         ),
-        SizedBox(height: 6), // 버튼과 텍스트 사이에 간격 추가
+        const SizedBox(height: 6), // 버튼과 텍스트 사이에 간격 추가
         Text(
           text,
-          style: TextStyle(color: Colors.white, fontSize: 12),
+          style: const TextStyle(color: Colors.white, fontSize: 12),
         ),
       ],
     );

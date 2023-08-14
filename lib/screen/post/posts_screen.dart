@@ -55,11 +55,7 @@ class PostsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: const Icon(SFSymbols.chevron_left)),
+
             const Spacer(),
             const Text('급줄',
                 style: TextStyle(
