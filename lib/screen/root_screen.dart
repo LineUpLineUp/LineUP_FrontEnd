@@ -100,7 +100,8 @@ class _RootScreenState extends State<RootScreen> with
             controller!.animateTo(index);
           });
         },
-        backgroundColor: AppColors.primaryBackgroundColor,
+
+        backgroundColor: AppColors.secondaryBackgroundColor,
         unselectedItemColor: AppColors.secondaryTextColor,
         selectedItemColor: AppColors.primaryTextColor,
 

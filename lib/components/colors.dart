@@ -11,6 +11,7 @@ class AppColors {
   static const primaryBackgroundColor = Color(0xFF12171F);
   static const secondaryBackgroundColor = Color(0xFF212732);
   static const floatingButtonColor = Color(0xFF2CE3A7);
+  static const floatingListColor = Color(0xFF2F3237);
   // <linearGradient id="paint0_linear_213_33215" x1="-3.82955" y1="10.7073" x2="23.483" y2="10.7073" gradientUnits="userSpaceOnUse">
   // <stop stop-color="#1280F4"/>
   // <stop offset="0.49339" stop-color="#2CE3F4"/>
