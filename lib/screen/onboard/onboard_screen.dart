@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/buttons.dart';
 import 'package:line_up_front_end/components/colors.dart';
+import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'package:line_up_front_end/screen/home_screen.dart';
 import 'package:line_up_front_end/screen/onboard/onboard_page.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -17,7 +18,7 @@ class OnboardingScreen extends StatelessWidget {
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               const Padding(padding: EdgeInsets.only(top: 7, left: 10)),
-              IconButton(
+               IconButton(
                 icon: const Icon(Icons.arrow_back_ios),
                 iconSize: 20,
                 color: Colors.grey,
@@ -71,12 +72,12 @@ class OnBoardingPageFirst extends OnboardingPage {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 52, left: 40),
+          padding: EdgeInsets.only(top: 50, left: 40),
           child: Text(
             '줄서기 공고가\n많은 카테고리',
             style: TextStyle(
               fontSize: 36,
-              fontWeight: FontWeight.w900,
+              fontWeight: CustomFontWeight.B,
               color: Colors.white,
             ),
           ),
@@ -87,6 +88,7 @@ class OnBoardingPageFirst extends OnboardingPage {
             '다양한 줄서기 공고 중에서도 가장 인기가 많은\n줄서기 카테고리를 준비했어요.',
             style: TextStyle(
               fontSize: 14,
+              fontWeight: CustomFontWeight.L,
               color: Colors.white,
             ),
           ),
@@ -128,7 +130,16 @@ class OnBoardingPageFirst extends OnboardingPage {
 
   @override
   Widget background() {
-    throw UnimplementedError();
+    return  Align(
+      alignment: Alignment.topRight,
+      child:  Padding(
+        padding: const EdgeInsets.only(top: 140),
+        child: Image.asset(
+          'assets/images/onboard/onboarding_background_1.png',
+          height: 404,
+        ),
+      ),
+    );
   }
 }
 
@@ -137,15 +148,13 @@ class OnBoardingPageSecond extends OnboardingPage {
 
   @override
   Widget background() {
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.primaryColor,
-            AppColors.primaryColor,
-          ],
+    return  Align(
+      alignment: Alignment.topRight,
+      child:  Padding(
+        padding: const EdgeInsets.only(top: 140),
+        child: Image.asset(
+          'assets/images/onboard/onboarding_background_2.png',
+          height: 596.6,
         ),
       ),
     );
@@ -157,12 +166,12 @@ class OnBoardingPageSecond extends OnboardingPage {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Padding(
-          padding: EdgeInsets.only(top: 52),
+          padding: EdgeInsets.only(top: 50),
           child: Text(
             '신뢰감 있는 PASS',
             style: TextStyle(
               fontSize: 36,
-              fontWeight: FontWeight.w900,
+              fontWeight: CustomFontWeight.B,
               color: Colors.white,
             ),
           ),
@@ -173,7 +182,7 @@ class OnBoardingPageSecond extends OnboardingPage {
             '검증절차',
             style: TextStyle(
               fontSize: 36,
-              fontWeight: FontWeight.w900,
+              fontWeight: CustomFontWeight.B,
               color: Colors.white,
             ),
           ),
@@ -184,6 +193,7 @@ class OnBoardingPageSecond extends OnboardingPage {
             '라인업은 pass를 인증한 성인분들만 이용할 수 있어요.',
             style: TextStyle(
               fontSize: 14,
+              fontWeight: CustomFontWeight.L,
               color: Colors.white,
             ),
           ),
@@ -222,82 +232,80 @@ class OnBoardingPageSecond extends OnboardingPage {
 class LoginPage extends OnboardingPage {
   @override
   Widget content(BuildContext context) {
-    return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 52,right: 40),
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Text(
-                  '오픈런 알바,',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                  ),
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 26),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 50),
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              const Text(
+                '오픈런 알바,',
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: CustomFontWeight.B,
+                  color: Colors.white,
                 ),
-                const Text(
-                  '줄서기 대행은 지금',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.white,
-                  ),
+              ),
+              const Text(
+                '줄서기 대행은 지금',
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: CustomFontWeight.B,
+                  color: Colors.white,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: SvgPicture.asset(
-                    'assets/images/onboard/onboarding_logo.svg',
-                    height: 32,
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 357),
-                        child: Column(
-                          children: [
-                            const Text(
-                              '계속하려면 로그인 하세요',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            snsLogin(context),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text(
-                              '로그인 시 이용 약관 및 개인정보 보호정책에 동의합니다.',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              SvgPicture.asset(
+                'assets/images/onboard/onboarding_logo.svg',
+                height: 32,
+              ),
+              Spacer(),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        const Text(
+                          '계속하려면 로그인 하세요',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: CustomFontWeight.M,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        snsLogin(context),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        const Text(
+                          '로그인 시 이용 약관 및 개인정보 보호정책에 동의합니다.',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: CustomFontWeight.M,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 42,
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        )
-      ],
+        ),
+      ),
     );
   }
 
@@ -360,7 +368,16 @@ class LoginPage extends OnboardingPage {
 
   @override
   Widget background() {
-    throw UnimplementedError();
+    return  Align(
+      alignment: Alignment.topRight,
+      child:  Padding(
+        padding: const EdgeInsets.only(top: 140),
+        child: Image.asset(
+          'assets/images/onboard/onboarding_background_3.png',
+          height: 461,
+        ),
+      ),
+    );
   }
 }
 
