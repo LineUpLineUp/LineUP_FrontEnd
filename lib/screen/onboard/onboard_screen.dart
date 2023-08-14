@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/buttons.dart';
 import 'package:line_up_front_end/components/colors.dart';
 import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
-import 'package:line_up_front_end/screen/home_screen.dart';
 import 'package:line_up_front_end/screen/onboard/onboard_page.dart';
+import 'package:line_up_front_end/screen/root_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 final controller = PageController(viewportFraction: 1, keepPage: true);
@@ -320,7 +320,7 @@ class LoginPage extends OnboardingPage {
           ),
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const RootScreen()));
           },
         ),
         const SizedBox(
@@ -333,7 +333,7 @@ class LoginPage extends OnboardingPage {
           ),
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const RootScreen()));
           },
         ),
         const SizedBox(
@@ -346,7 +346,7 @@ class LoginPage extends OnboardingPage {
           ),
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const RootScreen()));
           },
         ),
         const SizedBox(
@@ -359,7 +359,7 @@ class LoginPage extends OnboardingPage {
           ),
           onTap: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+                MaterialPageRoute(builder: (context) => const RootScreen()));
           },
         ),
       ],
@@ -402,7 +402,7 @@ class LoginScreen extends StatelessWidget {
                 // 로그인 로직 처리 후 메인 화면으로 이동
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const RootScreen()),
                 );
               },
               child: const Text('Login'),

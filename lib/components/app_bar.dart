@@ -9,7 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Container(
         padding: const EdgeInsets.only(bottom: 5),
-        height: 50,
+        // height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -17,32 +17,53 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               'assets/images/logo.png',
               fit: BoxFit.contain,
               height: 26,
+              width: 84,
             ),
-            const SizedBox(width: 12.0),
+            const SizedBox(width: 17.0),
             // SearchWidget(),
             Expanded(
               // Expanded를 사용하여 TextField가 남은 공간을 차지하도록 설정
               child: Container(
                 height: 36,
-                padding: const EdgeInsets.only(
-                    left: 10, right: 10, top: 9, bottom: 9),
-                decoration: ShapeDecoration(
-                  color: AppColors.secondaryBackgroundColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                width: 197,
+                // padding: const EdgeInsets.only(
+                //     left: 17, right: 17),
+                // decoration: ShapeDecoration(
+                //   // color: AppColors.secondaryBackgroundColor,
+                //   // color: Colors.black,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(15),
+                //   ),
+                // ),
+                child: IconButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    print('검색 버튼 클릭!');
+                    // TODO: 검색 페이지로 이동
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => ), // 다른 페이지의 위젯
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/icons/search.svg',
+                    width: 197,
+                    height: 36,
                   ),
                 ),
-                child: SearchBar(),
+
               ),
             ),
-            const SizedBox(width: 12.0),
+            // ),
+            const SizedBox(width: 17.0),
             Container(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  print('알림 클릭');
+                },
                 icon: SvgPicture.asset(
                   'assets/icons/bell.svg',
                   width: 24,
-                  height: 24,
+                  height: 25,
                 ),
               ),
             ),
@@ -50,56 +71,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       backgroundColor: AppColors.primaryBackgroundColor,
-      elevation: 0,
+      elevation: 0
+      ,
     );
   }
 
   @override
   Size get preferredSize => Size.fromHeight(50);
-}
-
-class SearchBar extends StatefulWidget {
-  @override
-  _SearchBarState createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<SearchBar> {
-  TextEditingController _searchController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      // padding: const EdgeInsets.all(8.0),
-      padding: const EdgeInsets.only(),
-
-      child: TextField(
-        controller: _searchController,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-        ),
-        onChanged: (value) {
-          // 검색어 변경 시 동작을 수행
-          print('검색어: $value');
-        },
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          hintText: '어떤 줄서기를 하고 싶은가요?',
-          hintStyle: TextStyle(
-            color: AppColors.primaryTextColor,
-            fontSize: 12,
-          ),
-          suffixIcon: IconButton(
-            icon: Icon(Icons.search),
-            color: Colors.white,
-            onPressed: () {
-              //TODO: 검색 버튼 클릭시 이벤트
-            },
-            padding: EdgeInsets.only(bottom: 9),
-          ),
-        ),
-      ),
-    );
-  }
 }

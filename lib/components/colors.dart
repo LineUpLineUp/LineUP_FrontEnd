@@ -12,6 +12,7 @@ class AppColors {
   static const primaryBackgroundColor = Color(0xFF12171F);
   static const secondaryBackgroundColor = Color(0xFF212732);
   static const floatingButtonColor = Color(0xFF2CE3A7);
+  static const floatingListColor = Color(0xFF2F3237);
   static const primaryGradient = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,

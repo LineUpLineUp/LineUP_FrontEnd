@@ -69,7 +69,8 @@ flutter:
     - assets/fonts/
     - assets/images/onboard/
     - assets/images/carousel/
-
+    - assets/icons/postForm/
+    - assets/icons/location/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
