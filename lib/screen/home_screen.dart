@@ -209,22 +209,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     //     context,
                     //     MaterialPageRoute(builder: (context) => ), // 다른 페이지의 위젯
                   },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 29, right: 35),
-                      child: Container(
-                        width: 326,
-                        height: 22,
-                        child: IconButton(
-                          padding: EdgeInsets.all(0),
-                          onPressed: () {},
-                          icon: SvgPicture.asset(
-                            'assets/icons/main_announcement.svg',
-                            fit: BoxFit.contain,
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 29, right: 35),
+                    child: Container(
+                      width: 326,
+                      height: 22,
+                      child: IconButton(
+                        padding: EdgeInsets.all(0),
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/main_announcement.svg',
+                          fit: BoxFit.contain,
                         ),
                       ),
                     ),
                   ),
+                ),
                 const SizedBox(height: 20),
                 Padding(
                   padding: EdgeInsets.only(left: 26, right: 132),
@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: FloatingActionButton(
           onPressed: () {
             _toggleItemList();
-            },
+          },
           child: _showItemList
               ? SvgPicture.asset(
             'assets/icons/floating_buttonX.svg',
@@ -308,21 +308,63 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Column(
         children: [
           Visibility(
-              visible: _isExpanded,
-              child: Column(
-                children: [
-                    Container(
-                      width: 177,
-                      height: 45,
-                      decoration: BoxDecoration(
-                        color: AppColors.floatingListColor,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: TextButton(
+            visible: _isExpanded,
+            child: Column(
+              children: [
+                Container(
+                  width: 177,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: AppColors.floatingListColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => PostForm()),
+                      ); // 다른 페이지의 위젯
+                    },
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 20,
+                          height: 20,
+                          color: AppColors.secondaryBackgroundColor,
+                          child: Image.asset(
+                            'assets/icons/급줄.png',
+                          ),
+                        ),
+                        const SizedBox(width: 9),
+                        Text(
+                          '급줄',
+                          style: const TextStyle(
+                            fontFamily: "AppleSDGothicNeoM00",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 177,
+                  height: 192,
+                  decoration: BoxDecoration(
+                    color: AppColors.floatingListColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextButton(
                         onPressed: () {
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PostForm()),
+                            context,
+                            MaterialPageRoute(builder: (context) => PostForm()),
                           ); // 다른 페이지의 위젯
                         },
                         child: Row(
@@ -332,161 +374,119 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 20,
                               color: AppColors.secondaryBackgroundColor,
                               child: Image.asset(
-                                'assets/icons/급줄.png',
+                                'assets/icons/백화점.png',
                               ),
                             ),
                             const SizedBox(width: 9),
-                              Text(
-                                '급줄',
-                                style: const TextStyle(
-                                  fontFamily: "AppleSDGothicNeoM00",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
+                            Text(
+                              '백화점',
+                              style: const TextStyle(
+                                fontFamily: "AppleSDGothicNeoM00",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                  const SizedBox(height: 10),
-                  Container(
-                    width: 177,
-                    height: 192,
-                    decoration: BoxDecoration(
-                      color: AppColors.floatingListColor,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PostForm()),
-                            ); // 다른 페이지의 위젯
-                          },
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: AppColors.secondaryBackgroundColor,
-                                child: Image.asset(
-                                  'assets/icons/백화점.png',
-                                ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PostForm()),
+                          ); // 다른 페이지의 위젯
+                        },
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 20,
+                              height: 20,
+                              color: AppColors.secondaryBackgroundColor,
+                              child: Image.asset(
+                                'assets/icons/음식점.png',
                               ),
-                              const SizedBox(width: 9),
-                              Text(
-                                '백화점',
-                                style: const TextStyle(
-                                  fontFamily: "AppleSDGothicNeoM00",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            const SizedBox(width: 9),
+                            Text(
+                              '음식점',
+                              style: const TextStyle(
+                                fontFamily: "AppleSDGothicNeoM00",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PostForm()),
-                            ); // 다른 페이지의 위젯
-                          },
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: AppColors.secondaryBackgroundColor,
-                                child: Image.asset(
-                                  'assets/icons/음식점.png',
-                                ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PostForm()),
+                          ); // 다른 페이지의 위젯
+                        },
+                        child: Row(
+                          children: [
+                            // const SizedBox(width: 16),
+                            Container(
+                              width: 20,
+                              height: 20,
+                              color: AppColors.secondaryBackgroundColor,
+                              child: Image.asset(
+                                'assets/icons/팝업스토어.png',
                               ),
-                              const SizedBox(width: 9),
-                              Text(
-                                '음식점',
-                                style: const TextStyle(
-                                  fontFamily: "AppleSDGothicNeoM00",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            const SizedBox(width: 9),
+                            Text(
+                              '팝업스토어',
+                              style: const TextStyle(
+                                fontFamily: "AppleSDGothicNeoM00",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PostForm()),
-                            ); // 다른 페이지의 위젯
-                          },
-                          child: Row(
-                            children: [
-                              // const SizedBox(width: 16),
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: AppColors.secondaryBackgroundColor,
-                                child: Image.asset(
-                                  'assets/icons/팝업스토어.png',
-                                ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PostForm()),
+                          ); // 다른 페이지의 위젯
+                        },
+                        child: Row(
+                          children: [
+                            // const SizedBox(width: 16),
+                            Container(
+                              width: 20,
+                              height: 20,
+                              color: AppColors.secondaryBackgroundColor,
+                              child: Image.asset(
+                                'assets/icons/카페.png',
                               ),
-                              const SizedBox(width: 9),
-                              Text(
-                                '팝업스토어',
-                                style: const TextStyle(
-                                  fontFamily: "AppleSDGothicNeoM00",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
+                            ),
+                            const SizedBox(width: 9),
+                            Text(
+                              '카페',
+                              style: const TextStyle(
+                                fontFamily: "AppleSDGothicNeoM00",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PostForm()),
-                            ); // 다른 페이지의 위젯
-                          },
-                          child: Row(
-                            children: [
-                              // const SizedBox(width: 16),
-                              Container(
-                                width: 20,
-                                height: 20,
-                                color: AppColors.secondaryBackgroundColor,
-                                child: Image.asset(
-                                  'assets/icons/카페.png',
-                                ),
-                              ),
-                              const SizedBox(width: 9),
-                              Text(
-                                '카페',
-                                style: const TextStyle(
-                                  fontFamily: "AppleSDGothicNeoM00",
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

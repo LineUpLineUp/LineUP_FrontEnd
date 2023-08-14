@@ -4,13 +4,15 @@ class Post {
   final String title;
   final String body;
   final String cost;
-  final DateTime date;
+  final DateTime startDate;
+  final DateTime endDate;
 
   Post({
     required this.title,
     required this.body,
     required this.cost,
-    required this.date,
+    required this.startDate,
+    required this.endDate,
   });
 
 }
