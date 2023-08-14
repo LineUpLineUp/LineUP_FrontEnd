@@ -1,9 +1,5 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../components/bottom_navigation_bar.dart';
 import '../components/colors.dart';
 import '../components/icon_components.dart';
 import 'home_screen.dart';
@@ -27,6 +23,7 @@ class _RootScreenState extends State<RootScreen> with
     super.initState();
 
     controller = TabController(length: 3, vsync: this); // 컨트롤러 초기화하기
+    controller?.index = 1;
 
     // 컨트롤러 속성이 변경될 때마다 실행할 함수 등록
     controller!.addListener(tabListener);
@@ -69,15 +66,15 @@ class _RootScreenState extends State<RootScreen> with
         ),
       ),
       // Container(
-        HomeScreen(),
-        // child: Center(
-        //   child: Text(
-        //     'Tab 2',
-        //     style: TextStyle(
-        //       color: Colors.black,
-        //     ),
-        //   ),
-        // ),
+      HomeScreen(),
+      // child: Center(
+      //   child: Text(
+      //     'Tab 2',
+      //     style: TextStyle(
+      //       color: Colors.black,
+      //     ),
+      //   ),
+      // ),
       // ),
       Container(
         child: Center(
@@ -98,6 +95,7 @@ class _RootScreenState extends State<RootScreen> with
         onTap: (int index) {
           setState(() {
             controller!.animateTo(index);
+            // controller!.index = index;
           });
         },
 

@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/app_bar.dart';
 import 'package:line_up_front_end/components/colors.dart';
 import 'package:line_up_front_end/screen/main_posts.dart';
+import 'package:line_up_front_end/screen/post/posts_screen.dart';
 import 'package:line_up_front_end/screen/post_form.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     controller: pageController,
                     children: [1, 2, 3, 4, 5]
                         .map(
-                          (number) => SvgPicture.asset(
-                        'assets/images/carousel/image_$number.svg',
+                          (number) => Image.asset(
+                        'assets/images/carousel/image_$number.jpeg',
                         fit: BoxFit.fill,
                       ),
                     )
@@ -91,8 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           print('맞춤 버튼 클릭!');
                           // TODO: 맞춤 페이지로 이동
                           // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => ), // 다른 페이지의 위젯
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => PostsScreen()),
+                          // );
                         },
                       ),
                       IconButtonWithText(
@@ -101,9 +103,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           print('급줄 버튼 클릭!');
                           // TODO: 급줄 페이지로 이동
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(builder: (context) => ), // 다른 페이지의 위젯
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PostsScreen()),
+                          );
                         },
                       ),
                       IconButtonWithText(
@@ -176,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           SvgPicture.asset(
-                            'assets/icons/location_square.svg',
+                            'assets/icons/location/location_square.svg',
                           ),
                           const SizedBox(width: 14),
                           Text(
@@ -188,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           const SizedBox(width: 179),
                           SvgPicture.asset(
-                            'assets/icons/location_backward.svg',
+                            'assets/icons/location/location_backward.svg',
                           ),
                         ],
                       ),
@@ -231,8 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     width: 232,
                     height: 43,
-                    child: Image.asset(
-                      'assets/icons/main_text.png',
+                    child: SvgPicture.asset(
+                      'assets/icons/main_text.svg',
                       fit: BoxFit.contain,
                     ),
                   ),
@@ -269,7 +272,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       // TODO: 모달 기능 추가 필요
       floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: 27, right: 29),
+        padding: EdgeInsets.only(bottom: 27),
+        // right: 29,
+        // bottom: 109,
         child: FloatingActionButton(
           onPressed: () {
             _toggleItemList();
@@ -303,8 +308,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildItemList() {
     return Positioned(
       // padding: EdgeInsets.only(bottom: 50, right: 29),
-      bottom: 110.0,
-      right: 50.0,
+      bottom: 110,
+      right: 29.0,
       child: Column(
         children: [
           Visibility(

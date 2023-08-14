@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../components/colors.dart';
 import '../components/gradient_text.dart';
-import '../models/post.dart';
+import '../models/post1.dart';
 
 class MainPosts extends StatelessWidget {
   final posts = [

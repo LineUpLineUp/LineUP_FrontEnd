@@ -57,7 +57,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             const SizedBox(width: 17.0),
             Container(
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  print('알림 클릭');
+                },
                 icon: SvgPicture.asset(
                   'assets/icons/bell.svg',
                   width: 24,
