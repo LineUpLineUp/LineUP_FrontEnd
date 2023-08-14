@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_up_front_end/screen/const/app_theme.dart';
-import 'package:line_up_front_end/screen/home_screen.dart';
+import 'package:line_up_front_end/screen/home/home_screen.dart';
 import 'package:line_up_front_end/screen/onboard/onboard_screen.dart';
 import 'package:line_up_front_end/screen/post/posts_screen.dart';
 import 'package:line_up_front_end/screen/root_screen.dart';
