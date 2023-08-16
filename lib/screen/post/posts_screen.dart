@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
-import 'package:line_up_front_end/components/colors.dart';
+import 'package:line_up_front_end/config/colors.dart';
 import 'package:line_up_front_end/components/gradient_widget.dart';
 import 'package:line_up_front_end/components/tags.dart';
 import 'package:line_up_front_end/models/post.dart';
 
-import '../const/custom_font_weight.dart';
+import '../../config/custom_font_weight.dart';
 
 final posts = [
   Post(

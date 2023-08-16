@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../components/colors.dart';
+import '../../config/colors.dart';
 import '../../models/post.dart';
 
 class MainPosts extends StatelessWidget {

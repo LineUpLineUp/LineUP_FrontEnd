@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/app_bar.dart';
-import 'package:line_up_front_end/components/colors.dart';
+import 'package:line_up_front_end/config/colors.dart';
 import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'package:line_up_front_end/screen/home/main_posts.dart';
 import 'package:line_up_front_end/screen/post/posts_screen.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:line_up_front_end/components/colors.dart';
+import 'package:line_up_front_end/config/colors.dart';
 
 class GradientWidget extends StatelessWidget {
   final Widget child;

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'colors.dart';
+import '../config/colors.dart';
 
 class SearchBar extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
+import 'package:line_up_front_end/config/custom_font_weight.dart';
 
-import 'colors.dart';
+import '../config/colors.dart';
 
 class TagRadioGroup extends StatefulWidget {
   final List<String> labels;

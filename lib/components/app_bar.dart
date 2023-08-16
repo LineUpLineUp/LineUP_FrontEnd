@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'colors.dart';
+import '../config/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override

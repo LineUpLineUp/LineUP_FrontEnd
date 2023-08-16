@@ -2,6 +2,8 @@ import 'dart:collection';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:line_up_front_end/config/custom_font_weight.dart';
+import 'package:line_up_front_end/config/colors.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
 import 'package:line_up_front_end/components/CustomImagePicker.dart';
@@ -11,7 +13,6 @@ import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../components/postForm/calendarUtils.dart';
 import '../components/postForm/shortCalendar.dart';
-import '../components/colors.dart';
 import '../components/postForm/shortTime.dart';
 
 class PostForm extends StatefulWidget {

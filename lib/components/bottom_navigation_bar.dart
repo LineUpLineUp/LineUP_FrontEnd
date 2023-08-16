@@ -1,7 +1,7 @@
 // bottom_navigation_bar.dart
 import 'package:flutter/material.dart';
 
-import 'package:line_up_front_end/components/colors.dart';
+import 'package:line_up_front_end/config/colors.dart';
 import 'package:line_up_front_end/components/icon_components.dart';
 import 'dart:async';
 

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import '../components/colors.dart';
+import '../config/colors.dart';
 import '../components/icon_components.dart';
 import 'home/home_screen.dart';
 
