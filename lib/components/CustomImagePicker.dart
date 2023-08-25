@@ -41,51 +41,74 @@ class _CustomImagePicker extends State<CustomImagePicker> {
               height: 64,
             ),
           )
-        : Row(
+        : Stack(
             children: [
-              Image.file(
-                _pikcedImage!,
-                width: 64,
-                height: 64,
-              ),
-              const SizedBox(width: 10),
-              Container(
-                height: 20,
-                child: ElevatedButton(
-                  onPressed: () => _pickImage(ImageSource.gallery),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                  ),
-                  child: Text(
-                    '수정',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: CustomFontWeight.L,
-                      color: Colors.black,
-                    ),
+              ClipRect(
+                child: Container(
+                  child: Image.file(
+                    _pikcedImage!,
+                    width: 64,
+                    height: 64,
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
-              if (_pikcedImage != null)
-                Container(
-                  height: 20,
-                  child: ElevatedButton(
-                    onPressed: _removeImage,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                    ),
-                    child: Text(
-                      '삭제',
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: CustomFontWeight.L,
-                        color: Colors.black,
-                      ),
-                    ),
+              Positioned(
+                top: -15,
+                right: -15,
+                child: IconButton(
+                  onPressed: _removeImage,
+                  icon: Image.asset(
+                    'assets/icons/postForm/deleteImage.png',
                   ),
                 ),
+              ),
             ],
           );
+    // : Row(
+    //     children: [
+    //       Image.file(
+    //         _pikcedImage!,
+    //         width: 64,
+    //         height: 64,
+    //       ),
+    //       const SizedBox(width: 10),
+    //       Container(
+    //         height: 20,
+    //         child: ElevatedButton(
+    //           onPressed: () => _pickImage(ImageSource.gallery),
+    //           style: ElevatedButton.styleFrom(
+    //             backgroundColor: Colors.white,
+    //           ),
+    //           child: Text(
+    //             '수정',
+    //             style: TextStyle(
+    //               fontSize: 12,
+    //               fontWeight: CustomFontWeight.L,
+    //               color: Colors.black,
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //       const SizedBox(width: 10),
+    //       if (_pikcedImage != null)
+    //         Container(
+    //           height: 20,
+    //           child: ElevatedButton(
+    //             onPressed: _removeImage,
+    //             style: ElevatedButton.styleFrom(
+    //               backgroundColor: Colors.white,
+    //             ),
+    //             child: Text(
+    //               '삭제',
+    //               style: TextStyle(
+    //                 fontSize: 12,
+    //                 fontWeight: CustomFontWeight.L,
+    //                 color: Colors.black,
+    //               ),
+    //             ),
+    //           ),
+    //         ),
+    //     ],
+    //   );
   }
 }

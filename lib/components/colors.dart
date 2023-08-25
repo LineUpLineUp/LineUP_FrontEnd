@@ -14,6 +14,7 @@ class AppColors {
   static const floatingButtonColor = Color(0xFF2CE3A7);
   static const floatingListColor = Color(0xFF2F3237);
   static const postFormButtonColor = Color(0xffD9D9D9);
+  static const drawerColor = Color(0xff313235);
   static const primaryGradient = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
@@ -42,6 +43,7 @@ class AppColors {
       0.903029,
     ],
   );
+
 
 
 // Add more colors as needed
