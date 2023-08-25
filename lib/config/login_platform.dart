@@ -5,7 +5,6 @@
 /// @version : 1.0.0
 /// @modified :
 ///
-import 'package:flutter/material.dart';
 
 enum LoginPlatform {
   google,
