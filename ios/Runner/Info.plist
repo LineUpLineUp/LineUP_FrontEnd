@@ -49,54 +49,58 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fbUrlSchemes</string>
-				<string>google url schemes</string>
-				<string>kakao네이티브 앱 키</string>
-				<string>socialloginapp</string>
-			</array>
-		</dict>
-	</array>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>naversearchapp</string>
-		<string>naversearchthirdlogin</string>
-	</array>
-	<key>naverServiceAppUrlScheme</key>
-	<string>socialloginapp</string>
-	<key>naverConsumerKey</key>
-	<string>client-id</string>
-	<key>naverConsumerSecret</key>
-	<string>client-secret</string>
-	<key>naverServiceAppName</key>
-	<string>app_name</string>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>naver.com</key>
-			<dict>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-			<key>naver.net</key>
-			<dict>
-				<key>NSExceptionRequiresForwardSecrecy</key>
-				<false/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
-    
+            <array>
+                <dict>
+                    <key>CFBundleTypeRole</key>
+                    <string>Editor</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>naver</string>
+                    </array>
+                </dict>
+            </array>
+
+            <key>LSApplicationQueriesSchemes</key>
+            <array>
+                <string>naversearchapp</string>
+                <string>naversearchthirdlogin</string>
+            </array>
+            <key>naverServiceAppUrlScheme</key>
+            <string>naver</string>
+            <key>naverConsumerKey</key>
+            <string>B_92M4CV3XEimJYDRlDj</string>
+            <key>naverConsumerSecret</key>
+            <string>U5tzYfUXAn</string>
+            <key>naverServiceAppName</key>
+            <string>LineUp</string>
+
+            <!-- http allows configurations -->
+            <key>NSAppTransportSecurity</key>
+            <dict>
+               <key>NSAllowsArbitraryLoads</key>
+               <true/>
+               <key>NSExceptionDomains</key>
+               <dict>
+                  <key>naver.com</key>
+                  <dict>
+                     <key>NSExceptionRequiresForwardSecrecy</key>
+                     <false/>
+                     <key>NSIncludesSubdomains</key>
+                     <true/>
+                  </dict>
+                  <key>naver.net</key>
+                  <dict>
+                     <key>NSExceptionRequiresForwardSecrecy</key>
+                     <false/>
+                     <key>NSIncludesSubdomains</key>
+                     <true/>
+                  </dict>
+               </dict>
+            </dict>
+
 		<key>NSPhotoLibraryUsageDescription</key>
         <string>갤러리 권한을 허가해주세요.</string>
 </dict>

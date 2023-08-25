@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:line_up_front_end/components/buttons.dart';
 import 'package:line_up_front_end/config/colors.dart';
@@ -230,6 +231,8 @@ class OnBoardingPageSecond extends OnboardingPage {
 }
 
 class LoginPage extends OnboardingPage {
+
+
   @override
   Widget content(BuildContext context) {
     return Container(
@@ -325,12 +328,15 @@ class LoginPage extends OnboardingPage {
         const SizedBox(
           width: 16,
         ),
+        // Naver login
         GestureDetector(
           child: SvgPicture.asset(
             'assets/icons/sns/naver.svg',
             height: 54,
           ),
-          onTap: () {
+          onTap: () async {
+            NaverLoginResult _result = await FlutterNaverLogin.logIn();
+            print(_result);
             Navigator.pushReplacementNamed(context, "home");
           },
         ),
