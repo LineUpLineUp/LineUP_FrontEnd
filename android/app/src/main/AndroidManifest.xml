@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <application
-        android:label="line_up_front_end"
+        android:label="LineUp"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
