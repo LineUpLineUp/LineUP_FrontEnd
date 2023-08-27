@@ -6,13 +6,21 @@ import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'package:line_up_front_end/screen/location/locationSearch.dart';
 
 class locationButton extends StatefulWidget {
-  const locationButton({Key? key}) : super(key: key);
+  final String selectedLocation;
+  final Function(String) onLocationChanged;
+  const locationButton({
+    Key? key,
+    required this.selectedLocation,
+    required this.onLocationChanged,
+  }) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _locationButton();
 }
 
 class _locationButton extends State<locationButton> {
+  // String selectedLocation = "어디에서 라인업 하나요?";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -30,11 +38,18 @@ class _locationButton extends State<locationButton> {
         ),
         const SizedBox(height: 10),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            final newLocation =
+            await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const locationSearch()),
+              MaterialPageRoute(
+                  builder: (context) => locationSearch()
+              ),
             );
+            if (newLocation != null) {
+              widget.onLocationChanged(newLocation);
+            }
+            // Navigator.of(context).pop();
           },
           child: Container(
             decoration: BoxDecoration(
@@ -49,21 +64,21 @@ class _locationButton extends State<locationButton> {
             height: 44,
             child: Row(
               children: [
-                // const SizedBox(width: 15),
                 SvgPicture.asset(
                   'assets/icons/location/location_square.svg',
                 ),
                 const SizedBox(width: 10),
-                Text(
-                  "어디에서 라인업 하나요?",
-                  style: const TextStyle(
-                    fontFamily: "AppleSDGothicNeoL00",
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: Color(0xffb0afaf),
-                    height: 15 / 12,
+                Flexible(
+                  child: Text(
+                    widget.selectedLocation,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: CustomFontWeight.L,
+                      color: Color(0xffb0afaf),
+                      height: 15 / 12,
+                    ),
+                    textAlign: TextAlign.left,
                   ),
-                  textAlign: TextAlign.left,
                 ),
               ],
             ),

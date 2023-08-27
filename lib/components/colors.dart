@@ -15,6 +15,7 @@ class AppColors {
   static const floatingListColor = Color(0xFF2F3237);
   static const postFormButtonColor = Color(0xffD9D9D9);
   static const drawerColor = Color(0xff313235);
+  static const locationHintTextColor = Color(0xffb0afaf);
   static const primaryGradient = LinearGradient(
     begin: Alignment.centerLeft,
     end: Alignment.centerRight,
