@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:line_up_front_end/components/CustomImagePicker.dart';
 import 'package:line_up_front_end/components/postForm/locationButton.dart';
 import 'package:line_up_front_end/components/postForm/longTime.dart';
@@ -13,6 +14,8 @@ import '../components/postForm/myDropDown.dart';
 import '../components/postForm/shortCalendar.dart';
 import '../components/colors.dart';
 import '../components/postForm/shortTime.dart';
+import '../models/location.dart';
+import 'location/locationSearch.dart';
 
 class PostForm extends StatefulWidget {
   final String initialText;
@@ -44,32 +47,11 @@ class _PostForm extends State<PostForm> {
   bool _showMenuList = false;
   bool _isExpanded = false;
 
+  String selectedLocation = '어디에서 라인업 하나요?';
+
   @override
   void initState() {
     super.initState();
-    // _updateAppBarTitle();
-  }
-
-  void _updateAppBarTitle() {
-    // AppBar의 title을 받아온 카테고리 텍스트와 이미지로 업데이트
-    final scaffoldMessenger = ScaffoldMessenger.of(context);
-    scaffoldMessenger.removeCurrentSnackBar(); // 스낵바를 제거하고 title 설정
-    scaffoldMessenger.showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Image.asset(
-              widget.imagePath,
-              width: 24, // 이미지의 크기를 조절하세요.
-              height: 24,
-            ),
-            SizedBox(width: 8), // 이미지와 텍스트 사이에 간격 조절
-            Text(widget.initialText),
-          ],
-        ),
-        duration: Duration(seconds: 2), // 스낵바 표시 시간
-      ),
-    );
   }
 
   //TODO: 불러오기
@@ -194,8 +176,7 @@ class _PostForm extends State<PostForm> {
       body: SafeArea(
         child: GestureDetector(
           onTap: () {
-            if (_showMenuList)
-              _togglePostList();
+            if (_showMenuList) _togglePostList();
           },
           child: Stack(
             children: [
@@ -794,7 +775,13 @@ class _PostForm extends State<PostForm> {
               children: [
                 shortCalendar(),
                 shortTime(),
-                locationButton(),
+                locationButton(
+                    selectedLocation: selectedLocation,
+                    onLocationChanged: (newLocation) {
+                      setState(() {
+                        selectedLocation = newLocation;
+                      });
+                    }),
                 phoneSave(phoneNumber: ''),
               ],
             ),
@@ -802,7 +789,13 @@ class _PostForm extends State<PostForm> {
             Column(
               children: [
                 longTime(),
-                locationButton(),
+                locationButton(
+                    selectedLocation: selectedLocation,
+                    onLocationChanged: (newLocation) {
+                      setState(() {
+                        selectedLocation = newLocation;
+                      });
+                    }),
                 phoneSave(phoneNumber: ''),
               ],
             ),
