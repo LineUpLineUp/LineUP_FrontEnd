@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:line_up_front_end/auth/authentication.dart';
 import 'package:line_up_front_end/components/buttons.dart';
 import 'package:line_up_front_end/config/colors.dart';
 import 'package:line_up_front_end/config/custom_font_weight.dart';
@@ -231,7 +232,7 @@ class OnBoardingPageSecond extends OnboardingPage {
 }
 
 class LoginPage extends OnboardingPage {
-
+  final Authentication authentication = new Authentication();
 
   @override
   Widget content(BuildContext context) {
@@ -335,8 +336,9 @@ class LoginPage extends OnboardingPage {
             height: 54,
           ),
           onTap: () async {
-            NaverLoginResult _result = await FlutterNaverLogin.logIn();
-            print(_result);
+            // NaverLoginResult _result = await FlutterNaverLogin.logIn();
+            authentication.authenticateWithNaver();
+            // print("naver login result"+_result.toString());
             Navigator.pushReplacementNamed(context, "home");
           },
         ),
