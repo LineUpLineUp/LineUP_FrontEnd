@@ -1,21 +1,18 @@
+import 'dart:collection';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_sfsymbols/flutter_sfsymbols.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:line_up_front_end/components/CustomImagePicker.dart';
 import 'package:line_up_front_end/components/postForm/locationButton.dart';
 import 'package:line_up_front_end/components/postForm/longTime.dart';
-import 'package:line_up_front_end/components/postForm/phoneSave.dart';
 import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-import '../components/postForm/myDropDown.dart';
+import '../components/postForm/calendarUtils.dart';
 import '../components/postForm/shortCalendar.dart';
 import '../components/colors.dart';
 import '../components/postForm/shortTime.dart';
-import '../models/location.dart';
-import 'location/locationSearch.dart';
 
 class PostForm extends StatefulWidget {
   final String initialText;
@@ -32,6 +29,12 @@ class _PostForm extends State<PostForm> {
   final formKey = GlobalKey<FormState>();
   bool _showErrors = false;
 
+  // 사진
+  File? pickedImage;
+  // 라인업 준수 동의 여부
+  bool _isRuleCheck = false;
+  //줄서기 제목
+  TextEditingController _titleEditingController = TextEditingController();
   // 상세 내용
   int maxLength = 1000;
   TextEditingController _textEditingController = TextEditingController();
@@ -42,44 +45,44 @@ class _PostForm extends State<PostForm> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime _selectedDay = DateTime.now();
+  LinkedHashSet<DateTime> selectedDates = LinkedHashSet(
+    equals: isSameDay,
+    hashCode: getHashCode,
+  );
+
+  List<String> selectedDays = [];
 
   // PostForm 메뉴 선택
   bool _showMenuList = false;
   bool _isExpanded = false;
 
+  // 라인업 시간
+  String selectedStartTime = "09:00";
+  String selectedEndTime = "18:00";
+
+  // 라인업 비용
+  String costSelectedText = "시급";
+  int costSelectedValue = 9620;
+
+
+  // 최저 임금 동의 여부
+  bool minMoney = false;
+
   String selectedLocation = '어디에서 라인업 하나요?';
+
+  bool isShortFormComplete = false;
+  bool isLongFormComplete = false;
 
   @override
   void initState() {
     super.initState();
+    _textEditingController.addListener(checkShortFormComplete);
+    _titleEditingController.addListener(checkShortFormComplete);
   }
 
   //TODO: 불러오기
   void _onExportClicked(BuildContext context) {
     print('불러오기 클릭');
-  }
-
-  void _showTimePicker() {
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: 300,
-            color: Colors.white,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.time,
-              initialDateTime: DateTime.now(),
-              onDateTimeChanged: (DateTime newTime) {
-                setState(() {});
-              },
-            ),
-          ),
-        );
-      },
-      barrierDismissible: true,
-    );
   }
 
   @override
@@ -533,7 +536,7 @@ class _PostForm extends State<PostForm> {
       padding: EdgeInsets.symmetric(horizontal: 26),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+        children: <Widget>[
           const SizedBox(height: 22),
           Row(
             children: [
@@ -566,7 +569,13 @@ class _PostForm extends State<PostForm> {
           ),
           const SizedBox(height: 16),
           //  사진 선택
-          CustomImagePicker(),
+          // CustomImagePicker(),
+          CustomImagePicker(
+            pickedImage: pickedImage,
+            onImageChanged: (newImage) {
+              pickedImage = newImage;
+            },
+          ),
         ],
       ),
     );
@@ -589,6 +598,7 @@ class _PostForm extends State<PostForm> {
           ),
           const SizedBox(height: 10),
           TextFormField(
+            controller: _titleEditingController,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 15,
@@ -773,30 +783,227 @@ class _PostForm extends State<PostForm> {
           if (isShortButtonSelected) // 버튼이 선택됐을 때만 달력을 보여줌
             Column(
               children: [
-                shortCalendar(),
-                shortTime(),
+                shortCalendar(
+                  selectedDates: selectedDates,
+                  onDatesChanged: (newDates) {
+                    checkShortFormComplete();
+                  },
+                ),
+                shortTime(
+                  selectedStartTime: selectedStartTime,
+                  selectedEndTime: selectedEndTime,
+                  onStartTimeChanged: (newStartTime) {
+                    selectedStartTime = newStartTime;
+                  },
+                  onEndTimeChanged: (newStartTime) {
+                    selectedEndTime = newStartTime;
+                  },
+                  costSelectedText: costSelectedText,
+                  costSelectedValue: costSelectedValue,
+                  onCostTextChanged: (newCostText) {
+                    costSelectedText = newCostText;
+                  },
+                  onCostValueChanged: (newCostValue) {
+                    costSelectedValue = newCostValue;
+                  },
+                ),
                 locationButton(
                     selectedLocation: selectedLocation,
                     onLocationChanged: (newLocation) {
                       setState(() {
                         selectedLocation = newLocation;
                       });
+                      checkShortFormComplete();
                     }),
-                phoneSave(phoneNumber: ''),
+                // phoneSave(phoneNumber: ''),
+                const SizedBox(height: 58),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _isRuleCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _isRuleCheck = newValue!;
+                        });
+                        checkShortFormComplete();
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "라인업 줄서기 대행 준수사항 동의",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: CustomFontWeight.M,
+                        color: Color(0xffffffff),
+                        height: 18 / 14,
+                      ),
+                    ),
+                    const SizedBox(width: 60),
+                    IconButton(
+                      onPressed: () {
+                        print('서약내놔');
+                      },
+                      icon: Icon(
+                        SFSymbols.chevron_down,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 67),
+
+                Container(
+                  width: 361,
+                  height: 52,
+                  child: ElevatedButton(
+                    style: isShortFormComplete
+                        ? ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.accentColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          )
+                        : ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryButtonColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                    onPressed: () {
+                      setState(() {
+                        // checkShortFormComplete();
+                      });
+                      // TODO: 서버에 데이터 전송(단기 포스트)
+                      isShortFormComplete ? print('저장') : null;
+                    },
+                    child: Text(
+                      '완료',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: CustomFontWeight.B,
+                        color: Colors.black,
+                        // height: 15 / 20,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           if (isLongButtonSelected) // 버튼이 선택됐을 때만 달력을 보여줌
             Column(
               children: [
-                longTime(),
+                longTime(
+                  selectedDays: selectedDays,
+                  onSelectedDaysChanged: (newDay) {
+                    checkLongFormComplete();
+                  },
+                  selectedStartTime: selectedStartTime,
+                  selectedEndTime: selectedEndTime,
+                  onStartTimeChanged: (newStartTime) {
+                    selectedStartTime = newStartTime;
+                  },
+                  onEndTimeChanged: (newStartTime) {
+                    selectedEndTime = newStartTime;
+                  },
+                  costSelectedText: costSelectedText,
+                  costSelectedValue: costSelectedValue,
+                  onCostTextChanged: (newCostText) {
+                    costSelectedText = newCostText;
+                  },
+                  onCostValueChanged: (newCostValue) {
+                    // costSelectedValue = int.parse(newCostValue);
+                    costSelectedValue = newCostValue;
+                  },
+                ),
                 locationButton(
                     selectedLocation: selectedLocation,
                     onLocationChanged: (newLocation) {
                       setState(() {
                         selectedLocation = newLocation;
                       });
+                      checkLongFormComplete();
                     }),
-                phoneSave(phoneNumber: ''),
+                // phoneSave(phoneNumber: ''),
+                const SizedBox(height: 58),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _isRuleCheck,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _isRuleCheck = newValue!;
+                        });
+                        checkLongFormComplete();
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      side: BorderSide(
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      "라인업 줄서기 대행 준수사항 동의",
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: CustomFontWeight.M,
+                        color: Color(0xffffffff),
+                        height: 18 / 14,
+                      ),
+                    ),
+                    const SizedBox(width: 60),
+                    IconButton(
+                      onPressed: () {
+                        print('서약내놔');
+                      },
+                      icon: Icon(
+                        SFSymbols.chevron_down,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 67),
+                Container(
+                  width: 361,
+                  height: 52,
+                  child: ElevatedButton(
+                    style: isLongFormComplete
+                        ? ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.accentColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    )
+                        : ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryButtonColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        )),
+                    onPressed: () {
+                      setState(() {
+                        // checkShortFormComplete();
+                      });
+                      // TODO: 서버에 데이터 전송(단기 포스트) -> 이후 메인 화면으로
+                      isLongFormComplete ? print('저장') : null;
+                    },
+                    child: Text(
+                      '완료',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: CustomFontWeight.B,
+                        color: Colors.black,
+                        // height: 15 / 20,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
         ],
@@ -808,5 +1015,71 @@ class _PostForm extends State<PostForm> {
   void dispose() {
     _textEditingController.dispose();
     super.dispose();
+  }
+
+  void checkShortFormComplete() {
+    final isTitleValid = _titleEditingController.text.isNotEmpty;
+    final isDetailValid = _textEditingController.text.length >= 10;
+    final isDateSelected = selectedDates.isNotEmpty;
+    final isLocationValid = selectedLocation != '어디에서 라인업 하나요?';
+
+    setState(() {
+      isShortFormComplete = isTitleValid && isDetailValid && isDateSelected && isLocationValid && _isRuleCheck;
+    });
+  //  TODO: 서버에 데이터 전송 후 삭제 예정
+  //       // print(_titleEditingController.text.isNotEmpty);
+  //       // print(_textEditingController.text.length);
+  //       // print(_isRuleCheck);
+  //       // print(selectedDates.isNotEmpty);
+  //       // print(selectedLocation != '어디에서 라인업 하나요?');
+  //       // print('\n');
+  //       // print(isShortFormComplete);
+  //       // print(selectedLocation);
+  //       // print(widget.initialText);
+  //       //
+  //       // print('단기 : $isShortButtonSelected');
+  //       // print('장기 : $isLongButtonSelected');
+  //       // print('서약체크 : $_isRuleCheck');
+  //       // print(selectedStartTime);
+  //       // print(selectedEndTime);
+  //       // print(costSelectedValue);
+  //       // print(costSelectedText);
+  //       // print(pickedImage);
+  //       // print(selectedDates);
+  //       // print(_titleEditingController.text);
+  //       // print(_textEditingController.text);
+  }
+
+  void checkLongFormComplete() {
+    final isTitleValid = _titleEditingController.text.isNotEmpty;
+    final isDetailValid = _textEditingController.text.length >= 10;
+    final isDateSelected = selectedDays.isNotEmpty;
+    final isLocationValid = selectedLocation != '어디에서 라인업 하나요?';
+
+    setState(() {
+      isLongFormComplete = isTitleValid && isDetailValid && isDateSelected && isLocationValid && _isRuleCheck;
+    });
+    //  TODO: 서버에 데이터 전송 후 삭제 예정
+  //   print(_titleEditingController.text.isNotEmpty);
+  //   print(_textEditingController.text.length);
+  //   print(_isRuleCheck);
+  //   print(selectedDates.isNotEmpty);
+  //   print(selectedLocation != '어디에서 라인업 하나요?');
+  //   print('\n');
+  //   print(isLongFormComplete);
+  //   print(selectedLocation);
+  //   print(widget.initialText);
+  //
+  //   print('단기 : $isShortButtonSelected');
+  //   print('장기 : $isLongButtonSelected');
+  //   print('서약체크 : $_isRuleCheck');
+  //   print(selectedStartTime);
+  //   print(selectedEndTime);
+  //   print(costSelectedValue);
+  //   print(costSelectedText);
+  //   print(pickedImage);
+  //   print(selectedDays);
+  //   print(_titleEditingController.text);
+  //   print(_textEditingController.text);
   }
 }

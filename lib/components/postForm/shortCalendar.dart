@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:line_up_front_end/components/postForm/shortTime.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 import '../../screen/const/custom_font_weight.dart';
@@ -11,7 +10,17 @@ import '../colors.dart';
 import 'calendarUtils.dart';
 
 class shortCalendar extends StatefulWidget {
-  const shortCalendar({Key? key}) : super(key: key);
+  LinkedHashSet<DateTime> selectedDates = LinkedHashSet(
+    equals: isSameDay,
+    hashCode: getHashCode,
+  );
+  final Function(DateTime) onDatesChanged;
+  shortCalendar({
+    Key? key,
+    required this.selectedDates,
+    required this.onDatesChanged,
+  }) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _CalendarState();
@@ -19,46 +28,26 @@ class shortCalendar extends StatefulWidget {
 
 class _CalendarState extends State<shortCalendar> {
   bool isShortButtonSelected = false;
-  bool isLongButtonSelected = false;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
-  DateTime _selectedDay = DateTime.now();
+  // DateTime _selectedDay = DateTime.now();
 
   // range 범위 지정
   // RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
   // DateTime? _rangeStart;
   // DateTime? _rangeEnd;
 
-  final Set<DateTime> _selectedDays = LinkedHashSet<DateTime>(
-    equals: isSameDay,
-    hashCode: getHashCode,
-  );
-
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
-  }
-
-  List<Event> _getEventsForDays(Set<DateTime> days) {
-    // Implementation example
-    // Note that days are in selection order (same applies to events)
-    return [
-      for (final d in days) ..._getEventsForDay(d),
-    ];
-  }
-
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       _focusedDay = focusedDay;
       // Update values in a Set
-      if (_selectedDays.contains(selectedDay)) {
-        _selectedDays.remove(selectedDay);
+      if (widget.selectedDates.contains(selectedDay)) {
+        widget.selectedDates.remove(selectedDay);
       } else {
-        _selectedDays.add(selectedDay);
+        widget.selectedDates.add(selectedDay);
       }
     });
-
-    // _selectedEvents.value = _getEventsForDays(_selectedDays);
+    widget.onDatesChanged(selectedDay);
   }
 
   @override
@@ -67,9 +56,9 @@ class _CalendarState extends State<shortCalendar> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         const SizedBox(height: 32),
-        Text(
+        const Text(
           "라인업 날짜",
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
             fontWeight: CustomFontWeight.M,
             color: Color(0xffffffff),
@@ -102,9 +91,7 @@ class _CalendarState extends State<shortCalendar> {
             CalendarFormat.month: 'Month', // 한 달 형식으로 고정
           },
           selectedDayPredicate: (day) {
-            // return isSameDay(_selectedDay, day);
-            return _selectedDays.contains(day);
-
+            return widget.selectedDates.contains(day);
           },
           onFormatChanged: (format) {
             setState(() {
@@ -115,30 +102,6 @@ class _CalendarState extends State<shortCalendar> {
             _focusedDay = focusedDay;
           },
           onDaySelected: _onDaySelected,
-
-          // onDaySelected: (selectedDay, focusedDay) {
-          //   if (!isSameDay(_selectedDay, selectedDay)) {
-          //     setState(() {
-          //       _selectedDay = selectedDay;
-          //       _focusedDay = focusedDay;
-          //       _rangeStart = null; // Important to clean those
-          //       _rangeEnd = null;
-          //       _rangeSelectionMode = RangeSelectionMode.toggledOff;
-          //     });
-          //   }
-          // setState(() {
-          //   _selectedDay = selectedDay;
-          // });
-          // },
-          // onRangeSelected: (start, end, focusedDay) {
-          //   setState(() {
-          //     _selectedDay = _selectedDay;
-          //     _focusedDay = focusedDay;
-          //     _rangeStart = start;
-          //     _rangeEnd = end;
-          //     _rangeSelectionMode = RangeSelectionMode.toggledOn;
-          //   });
-          // },
           headerStyle: HeaderStyle(
             formatButtonVisible: false,
             titleCentered: true,
@@ -152,7 +115,7 @@ class _CalendarState extends State<shortCalendar> {
                   .format(currentDate.add(const Duration(days: 31)));
               return '$start~$end';
             },
-            titleTextStyle: TextStyle(
+            titleTextStyle: const TextStyle(
               fontSize: 16,
               fontWeight: CustomFontWeight.SB,
               color: Color(0xffffffff),

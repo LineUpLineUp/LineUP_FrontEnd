@@ -3,10 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_up_front_end/components/colors.dart';
 import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
-import 'myDropDown.dart';
 
 class shortTime extends StatefulWidget {
-  const shortTime({Key? key}) : super(key: key);
+  // 라인업 시간
+  String selectedStartTime;
+  String selectedEndTime;
+  final Function(String) onStartTimeChanged; // 시작 시간 콜백 함수
+  final Function(String) onEndTimeChanged; // 종료 시간 콜백 함수
+
+  // 라인업 비용
+  String costSelectedText;
+
+  // String costSelectedValue;
+  int costSelectedValue;
+  final Function(String) onCostTextChanged;
+  final Function(int) onCostValueChanged;
+
+  // 최저임금 준수 여부
+  // bool minMoney;
+  // final Function(bool) onMinMoney;
+
+  shortTime({
+    Key? key,
+    required this.selectedStartTime,
+    required this.selectedEndTime,
+    required this.onStartTimeChanged,
+    required this.onEndTimeChanged,
+    required this.costSelectedText,
+    required this.costSelectedValue,
+    required this.onCostTextChanged,
+    required this.onCostValueChanged,
+    // required this.minMoney,
+    // required this.onMinMoney,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _shortTime();
@@ -14,9 +43,6 @@ class shortTime extends StatefulWidget {
 
 class _shortTime extends State<shortTime> {
   // 라인업 시간
-  String selectedStartTime = "09:00";
-  String selectedEndTime = "18:00";
-
   bool _showStartTimeList = false;
   bool _showEndTimeList = false;
 
@@ -25,9 +51,9 @@ class _shortTime extends State<shortTime> {
   ScrollController _scrollController = ScrollController();
 
   // 라인업 비용
-  String costSelectedValue = "시급";
   bool _showCostList = false;
   bool _isCostExpanded = false;
+  TextEditingController textController = TextEditingController();
 
   @override
   void initState() {
@@ -37,6 +63,29 @@ class _shortTime extends State<shortTime> {
         _scrollController.jumpTo(0.0);
       }
     });
+    textController.text = widget.costSelectedValue.toString();
+    textController.addListener(_updateSavedValue);
+  }
+
+  void _updateSavedValue() {
+    final inputText = textController.text;
+    if (inputText.isNotEmpty) {
+      try {
+        final parsedValue = int.parse(inputText);
+        setState(() {
+          widget.costSelectedValue = parsedValue;
+        });
+        widget.onCostValueChanged(parsedValue);
+      } catch (e) {
+        widget.costSelectedValue = 9620;
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,7 +102,7 @@ class _shortTime extends State<shortTime> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(height: 60),
-              Text(
+              const Text(
                 "라인업 시간",
                 style: TextStyle(
                   fontSize: 14,
@@ -62,7 +111,7 @@ class _shortTime extends State<shortTime> {
                 ),
               ),
               SizedBox(height: 10),
-              Row(
+              const Row(
                 children: [
                   Text(
                     "시작",
@@ -104,7 +153,7 @@ class _shortTime extends State<shortTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            selectedStartTime,
+                            widget.selectedStartTime,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -122,9 +171,9 @@ class _shortTime extends State<shortTime> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(
+                  const Text(
                     "~",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: CustomFontWeight.M,
                       color: Color(0xffffffff),
@@ -151,7 +200,7 @@ class _shortTime extends State<shortTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            selectedEndTime,
+                            widget.selectedEndTime,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -171,9 +220,9 @@ class _shortTime extends State<shortTime> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 "라인업 비용",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: CustomFontWeight.M,
                   color: Color(0xffffffff),
@@ -201,7 +250,7 @@ class _shortTime extends State<shortTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            costSelectedValue,
+                            widget.costSelectedText,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -223,6 +272,7 @@ class _shortTime extends State<shortTime> {
                     width: 175,
                     height: 44,
                     child: TextFormField(
+                      controller: textController,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: CustomFontWeight.M,
@@ -243,7 +293,7 @@ class _shortTime extends State<shortTime> {
                           height: 18 / 14,
                         ),
                         suffixText: '원',
-                        suffixStyle: TextStyle(
+                        suffixStyle: const TextStyle(
                           fontSize: 14,
                           fontWeight: CustomFontWeight.M,
                           color: Color(0xffffffff),
@@ -272,9 +322,9 @@ class _shortTime extends State<shortTime> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 15),
-                    Text(
+                    const Text(
                       "최저임금을 꼭 지켜주세요!",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: CustomFontWeight.B,
                         color: Color(0xffffffff),
@@ -285,6 +335,9 @@ class _shortTime extends State<shortTime> {
                     GestureDetector(
                       onTap: () {
                         print('좋아용 클릭');
+                        // setState(() {
+                        //   widget.minMoney =
+                        // });
                       },
                       child: Image.asset(
                         'assets/icons/postForm/good.png',
@@ -351,7 +404,10 @@ class _shortTime extends State<shortTime> {
                   children: timeList.map((time) {
                     return TextButton(
                       onPressed: () {
-                        selectedStartTime = time;
+                        setState(() {
+                          widget.selectedStartTime = time;
+                        });
+                        widget.onStartTimeChanged(time);
                         _toggleStartTimeList();
                       },
                       child: Row(
@@ -406,7 +462,10 @@ class _shortTime extends State<shortTime> {
                   children: timeList.map((time) {
                     return TextButton(
                       onPressed: () {
-                        selectedEndTime = time;
+                        setState(() {
+                          widget.selectedEndTime = time;
+                        });
+                        widget.onEndTimeChanged(time);
                         _toggleEndTimeList();
                       },
                       child: Row(
@@ -456,7 +515,10 @@ class _shortTime extends State<shortTime> {
                   children: costList.map((cost) {
                     return TextButton(
                       onPressed: () {
-                        costSelectedValue = cost;
+                        setState(() {
+                          widget.costSelectedText = cost;
+                        });
+                        widget.onCostTextChanged(cost);
                         _toggleCostList();
                       },
                       child: Row(
