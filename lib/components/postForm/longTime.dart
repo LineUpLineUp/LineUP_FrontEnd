@@ -7,19 +7,40 @@ import 'package:line_up_front_end/screen/const/custom_font_weight.dart';
 import 'myDropDown.dart';
 
 class longTime extends StatefulWidget {
-  const longTime({Key? key}) : super(key: key);
+  List<String> selectedDays;
+  final Function(String) onSelectedDaysChanged;
+
+  // 라인업 시간
+  String selectedStartTime;
+  String selectedEndTime;
+  final Function(String) onStartTimeChanged;
+  final Function(String) onEndTimeChanged;
+
+  // 라인업 비용
+  String costSelectedText;
+  int costSelectedValue;
+  final Function(String) onCostTextChanged;
+  final Function(int) onCostValueChanged;
+
+  longTime({
+    Key? key,
+    required this.selectedDays,
+    required this.onSelectedDaysChanged,
+    required this.selectedStartTime,
+    required this.selectedEndTime,
+    required this.onStartTimeChanged,
+    required this.onEndTimeChanged,
+    required this.costSelectedText,
+    required this.costSelectedValue,
+    required this.onCostTextChanged,
+    required this.onCostValueChanged,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _longTime();
 }
 
 class _longTime extends State<longTime> {
-  // 라인업 날짜
-  List<String> selectedDays = [];
-
-  // 라인업 시간
-  String selectedStartTime = "09:00";
-  String selectedEndTime = "18:00";
-
   bool _showStartTimeList = false;
   bool _showEndTimeList = false;
 
@@ -27,20 +48,19 @@ class _longTime extends State<longTime> {
   bool _isEndExpanded = false;
   ScrollController _scrollController = ScrollController();
 
-  // 라인업 비용
-  String costSelectedValue = "시급";
   bool _showCostList = false;
   bool _isCostExpanded = false;
-
+  TextEditingController textController = TextEditingController();
 
   void toggleDay(String day) {
     setState(() {
-      if (selectedDays.contains(day)) {
-        selectedDays.remove(day);
+      if (widget.selectedDays.contains(day)) {
+        widget.selectedDays.remove(day);
       } else {
-        selectedDays.add(day);
+        widget.selectedDays.add(day);
       }
     });
+    widget.onSelectedDaysChanged(day);
   }
 
   @override
@@ -51,12 +71,37 @@ class _longTime extends State<longTime> {
         _scrollController.jumpTo(0.0);
       }
     });
+    textController.text = widget.costSelectedValue.toString();
+    textController.addListener(_updateSavedValue);
+  }
+
+  void _updateSavedValue() {
+    final inputText = textController.text;
+    if (inputText.isNotEmpty) {
+      try {
+        final parsedValue = int.parse(inputText);
+        setState(() {
+          widget.costSelectedValue = parsedValue;
+        });
+        widget.onCostValueChanged(parsedValue);
+      } catch (e) {
+        widget.costSelectedValue = 9620;
+      }
+    } else {
+      widget.costSelectedValue = 9620;
+    }
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         if (_showStartTimeList) _toggleStartTimeList();
         if (_showEndTimeList) _toggleEndTimeList();
         if (_showCostList) _toggleCostList();
@@ -67,9 +112,9 @@ class _longTime extends State<longTime> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 "라인업 날짜",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: CustomFontWeight.M,
                   color: Color(0xffffffff),
@@ -89,14 +134,14 @@ class _longTime extends State<longTime> {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: selectedDays.contains(day)
+                          color: widget.selectedDays.contains(day)
                               ? AppColors.postFormButtonColor // 선택된 경우의 색상
                               : AppColors
                                   .secondaryBackgroundColor, // 선택되지 않은 경우의 색상
                         ),
                         child: Text(
                           day,
-                          style: selectedDays.contains(day)
+                          style: widget.selectedDays.contains(day)
                               ? const TextStyle(
                                   fontSize: 14,
                                   fontWeight: CustomFontWeight.M,
@@ -115,7 +160,7 @@ class _longTime extends State<longTime> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 "라인업 시간",
                 style: TextStyle(
                   fontSize: 14,
@@ -125,7 +170,7 @@ class _longTime extends State<longTime> {
                 ),
               ),
               SizedBox(height: 10),
-              Row(
+              const Row(
                 children: [
                   Text(
                     "시작",
@@ -150,7 +195,7 @@ class _longTime extends State<longTime> {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _toggleStartTimeList();
                     },
                     child: Container(
@@ -167,7 +212,7 @@ class _longTime extends State<longTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            selectedStartTime,
+                            widget.selectedStartTime,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -185,9 +230,9 @@ class _longTime extends State<longTime> {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Text(
+                  const Text(
                     "~",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: CustomFontWeight.M,
                       color: Color(0xffffffff),
@@ -197,7 +242,7 @@ class _longTime extends State<longTime> {
                   ),
                   const SizedBox(width: 10),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       _toggleEndTimeList();
                     },
                     child: Container(
@@ -214,7 +259,7 @@ class _longTime extends State<longTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            selectedEndTime,
+                            widget.selectedEndTime,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -234,9 +279,9 @@ class _longTime extends State<longTime> {
                 ],
               ),
               const SizedBox(height: 32),
-              Text(
+              const Text(
                 "라인업 비용",
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: CustomFontWeight.M,
                   color: Color(0xffffffff),
@@ -264,7 +309,7 @@ class _longTime extends State<longTime> {
                         children: [
                           const SizedBox(width: 18),
                           Text(
-                            costSelectedValue,
+                            widget.costSelectedText,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: CustomFontWeight.M,
@@ -286,6 +331,7 @@ class _longTime extends State<longTime> {
                     width: 175,
                     height: 44,
                     child: TextFormField(
+                      controller: textController,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: CustomFontWeight.M,
@@ -307,7 +353,7 @@ class _longTime extends State<longTime> {
                           height: 18 / 14,
                         ),
                         suffixText: '원',
-                        suffixStyle: TextStyle(
+                        suffixStyle: const TextStyle(
                           fontSize: 14,
                           fontWeight: CustomFontWeight.M,
                           color: Color(0xffffffff),
@@ -339,9 +385,9 @@ class _longTime extends State<longTime> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 15),
-                    Text(
+                    const Text(
                       "최저임금을 꼭 지켜주세요!",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: CustomFontWeight.B,
                         color: Color(0xffffffff),
@@ -367,7 +413,6 @@ class _longTime extends State<longTime> {
           if (_showCostList) costMenu(),
         ],
       ),
-
     );
   }
 
@@ -419,7 +464,10 @@ class _longTime extends State<longTime> {
                   children: timeList.map((time) {
                     return TextButton(
                       onPressed: () {
-                        selectedStartTime = time;
+                        setState(() {
+                          widget.selectedStartTime = time;
+                        });
+                        widget.onStartTimeChanged(time);
                         _toggleStartTimeList();
                       },
                       child: Row(
@@ -474,7 +522,10 @@ class _longTime extends State<longTime> {
                   children: timeList.map((time) {
                     return TextButton(
                       onPressed: () {
-                        selectedEndTime = time;
+                        setState(() {
+                          widget.selectedEndTime = time;
+                        });
+                        widget.onEndTimeChanged(time);
                         _toggleEndTimeList();
                       },
                       child: Row(
@@ -524,7 +575,10 @@ class _longTime extends State<longTime> {
                   children: costList.map((cost) {
                     return TextButton(
                       onPressed: () {
-                        costSelectedValue = cost;
+                        setState(() {
+                          widget.costSelectedText = cost;
+                        });
+                        widget.onCostTextChanged(cost);
                         _toggleCostList();
                       },
                       child: Row(
